@@ -2,13 +2,32 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import onClickOutside from 'react-onclickoutside';
 import auth from '../../auth';
+import api from '../../api';
 import './Menu.css';
 
 
 class Menu extends Component {
-  
+
+  constructor(props){
+    super(props);
+    this.state = {};
+  }
+
   handleClickOutside = () => {
     this.props.closeMenu();
+  }
+
+  componentDidMount(){
+    this.fetchProfilePic()
+  }
+
+  fetchProfilePic = () => {
+     return api.getProfilePic()
+     .then(res => {
+       this.setState({
+         url : res.body.avatarUrl
+       });
+     })
   }
 
   render() {
@@ -18,7 +37,7 @@ class Menu extends Component {
       <div className={`menu ${show?"show":""}`}>
 
         <div className="menu__header">
-          <img src="" alt="profile-pic" className="menu__avatar"/>
+          <img src={this.state.url} alt="profile-pic" className="menu__avatar"/>
         </div>
 
         <div className="menu__list">
