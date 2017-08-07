@@ -23,5 +23,8 @@ module.exports = {
   isLoggedIn() {
     return !!localStorage.token
   },
-  
+
+  signUp(email, pass){
+    return api.requestSignUp(email, pass);
+  }
 }
