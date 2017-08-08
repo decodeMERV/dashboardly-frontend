@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import onClickOutside from 'react-onclickoutside';
 import auth from '../../auth';
 import './Menu.css';
+import Logout from "../Logout";
 
 
 class Menu extends Component {
@@ -40,9 +41,9 @@ class Menu extends Component {
           : null}
 
           {isLoggedIn ?
-            <Link to="/logout" className="menu__item" onClick={closeMenu}>
-              Logout
-            </Link>
+            <div className="menu__item" onClick={closeMenu}>
+              <Logout buttonText="Logout"/>
+            </div>
           : null}
         </div>
 
