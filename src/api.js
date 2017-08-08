@@ -29,6 +29,11 @@ class Api {
     superagent
     .get(`${API_HOST}/boards/${boardId}/bookmarks`)
   )
+
+  getCurrentUser = () => (
+    superagent
+      .get(`${API_HOST}/auth/me`)
+  )
   
 }
 
