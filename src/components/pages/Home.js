@@ -4,13 +4,14 @@ import BoardCard from '../elements/BoardCard';
 import AddButton from '../elements/AddButton';
 import auth from '../../auth';
 import './Home.css';
-
+import CreateBoard from "../modals/CreateBoard";
 
 export default class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      boards: []
+      boards: [],
+      isCreateBoardOpen: false
     };
   }
   
@@ -26,6 +27,8 @@ export default class Home extends Component {
     .catch(console.error)
   }
 
+  closeCreateBoard = () => this.setState({ isCreateBoardOpen: false });
+
   render() {
     let { boards } = this.state
     return (
@@ -39,7 +42,8 @@ export default class Home extends Component {
             updatedAt={b.updatedAt}
           />
         )}
-        {auth.isLoggedIn() ? <AddButton /> : null}
+        {auth.isLoggedIn() ? <AddButton onClick={ ()=>this.setState({ isCreateBoardOpen : !this.state.isCreateBoardOpen }) } /> : null}
+          <CreateBoard show={this.state.isCreateBoardOpen} closeCreateBoard={ this.closeCreateBoard } />
       </div>
     );
   }
