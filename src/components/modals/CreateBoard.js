@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import './CreateBoard.css';
 import onClickOutside from 'react-onclickoutside';
 import api from '../../api';
+import { withRouter } from 'react-router'
 
 const ENTER = 13;
 const CHARLIMIT = 80;
@@ -44,7 +45,7 @@ class CreateBoard extends Component {
     }
     else if (this.refs.title.value && this.refs.desc.value) {
       api.createBoard(this.refs.title.value, this.refs.desc.value)
-        .then(res => this.props.history.push(`/board/${res.body.id}`))
+        .then(res => this.props.router.push(`/boards/${res.body.id}`))
     }
   }
 
@@ -55,10 +56,10 @@ class CreateBoard extends Component {
         <input type="text" ref="title" placeholder="Title" onKeyUp={this._handleTyping}/>
         <input type="text" ref="desc" placeholder="Description" onKeyUp={this._handleTyping} onInput={this._handleInput} value={this.state.currentInput}/>
         <button onClick={this._handleCreateBoard}>Create</button>
-        <h5> {this.state.error?"Error: " + this.state.error : ""} <span>{this.state.currentInput.length}/80</span> </h5>
+        <h4> {this.state.error?"Error: " + this.state.error : ""} <span>{this.state.currentInput.length}/80</span> </h4>
       </div>
     );
   }
 
 }
-export default onClickOutside(CreateBoard);
+export default withRouter(onClickOutside(CreateBoard));
