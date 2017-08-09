@@ -1,0 +1,21 @@
+.editBookmark {
+  width: 270px;
+  position: fixed;
+  top: 10rem;
+  left: 10rem;
+  z-index: 10;
+  background: lightgrey;
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -o-transition: 0.5s;
+  transition: 0.5s;
+  transform: translateX(-270px);
+  opacity: 0;
+  visibility: hidden;
+}
+
+.editBookmark.show {
+  transform: translateX(0px);
+  opacity: 1;
+  visibility: visible;
+}

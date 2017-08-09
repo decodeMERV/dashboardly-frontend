@@ -29,6 +29,23 @@ class Api {
     superagent
     .get(`${API_HOST}/boards/${boardId}/bookmarks`)
   )
+
+  getCurrentUser = () => (
+    superagent
+      .get(`${API_HOST}/auth/me`)
+  )
+
+  editBoard = (id, title, description) => {
+     return superagent
+      .patch(`${API_HOST}/boards/${id}`)
+      .send({title, description})
+  }
+
+  editBookmark = (id, title, url, description) => {
+    return superagent
+      .patch(`${API_HOST}/bookmarks/${id}`)
+      .send({title, url, description})
+  }
   
 }
 
