@@ -6,6 +6,7 @@ import auth from '../../auth';
 import './Home.css';
 import EditButton from '../elements/EditButton';
 import EditBoard from '../modals/EditBoard';
+import CreateBoard from "../modals/CreateBoard";
 
 export default class Home extends Component {
   constructor(props) {
@@ -13,7 +14,8 @@ export default class Home extends Component {
     this.state = {
       boards: [],
       isEditBoardOpen: false,
-      editingBoardID: ""
+      editingBoardID: "",
+      isCreateBoardOpen: false
     };
   }
   
@@ -39,7 +41,9 @@ export default class Home extends Component {
 
   editBoard = () => this.setState({ isEditBoardOpen: false });
 
-  render() { //Note that I changed the key from the BoardCard to the div above it
+  closeCreateBoard = () => this.setState({ isCreateBoardOpen: false });
+
+  render() {
     let { boards } = this.state
     return (
       <div className="home">
@@ -55,7 +59,8 @@ export default class Home extends Component {
           </div>
         )}
         <EditBoard show={this.state.isEditBoardOpen} closeEditBoard={this.editBoard} editBoardId={this.state.editingBoardID} /*We need to the editBoardId state to be transferred from the onClick event, namely as each onClick will be dynamically generated*/ />
-        {auth.isLoggedIn() ? <AddButton /> : null}
+        {auth.isLoggedIn() ? <AddButton onClick={ ()=>this.setState({ isCreateBoardOpen : !this.state.isCreateBoardOpen }) } /> : null}
+          <CreateBoard show={this.state.isCreateBoardOpen} closeCreateBoard={ this.closeCreateBoard } />
       </div>
     );
   }

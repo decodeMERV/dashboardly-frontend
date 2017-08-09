@@ -56,6 +56,12 @@ class Api {
   }
 
 
+  createBoard = (title, description) => (
+    superagent
+      .post(`${API_HOST}/boards`)
+      .send({ title, description })
+  )
+  
 }
 
 export default new Api();
