@@ -33,7 +33,7 @@ export default class Home extends Component {
   _fetchCurrentUser(){
     auth.getCurrentLoggedInUser()
       .then( res => {
-        this.setState({ userId: /*res.body.id*/ 5 }) //TODO: for testing on apiary we use "5"
+        this.setState({ userId: res.body.id /*5*/ }) //TODO: for testing on apiary we use "5"
       })
   }
 

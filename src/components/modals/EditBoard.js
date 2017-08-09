@@ -61,7 +61,7 @@ class editBoard extends Component{
         <h2> Edit Board </h2>
         <input type="text" ref="title" placeholder="title" onKeyUp={this._handleTyping} />
         <input type="text" ref="desc" placeholder="description" onKeyUp={this._handleTyping}  onInput={this._handleInput} value={this.state.currentInput}/>
-        <button onClick={this._handleEditBoard}>Edit</button>
+        <button onClick={this._handleEditBoard}>Edit Board</button>
         <h4> {this.state.error ? "Error: " + this.state.error : ""} <span>{this.state.currentInput.length}/80</span></h4>
       </div>
     );

@@ -40,6 +40,12 @@ class Api {
       .patch(`${API_HOST}/boards/${id}`)
       .send({title, description})
   }
+
+  editBookmark = (id, title, url, description) => {
+    return superagent
+      .patch(`${API_HOST}/bookmarks/${id}`)
+      .send({title, url, description})
+  }
   
 }
 
