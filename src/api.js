@@ -29,6 +29,7 @@ class Api {
     superagent
     .get(`${API_HOST}/boards/${boardId}/bookmarks`)
   )
+
   getProfilePic = () =>(
     superagent
     .get(`${API_HOST}/auth/me`)
@@ -64,6 +65,11 @@ class Api {
     .send({title, url, description, boardId})
   )
 
+  requestSignUp = (email, password) => (
+    superagent
+      .post(`${API_HOST}/auth/users`)
+      .send({email, password})
+  )
 }
 
 export default new Api();

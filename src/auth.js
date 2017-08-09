@@ -26,6 +26,9 @@ module.exports = {
 
   getCurrentLoggedInUser() {
     return api.getCurrentUser();
-  }
+  },
 
+  signUp(email, pass){
+    return api.requestSignUp(email, pass);
+  }
 }
