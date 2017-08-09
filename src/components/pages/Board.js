@@ -57,10 +57,10 @@ export default class Board extends Component {
               description={b.description}
               url={b.url}
             />
-            {this.state.userOwns ? <EditButton onClick={ () => this.setState({ isEditBookmarkOpen : !this.state.isEditBookmarkOpen,  editingBookmarkId : b.id}) } /> : ""}
+            {this.state.userOwns ? <EditButton onClick={ () => this.setState({ isEditBookmarkOpen : !this.state.isEditBookmarkOpen,  theBoardId : b.boardId}) } /> : ""}
           </div>
         )}
-        <EditBookmark show={this.state.isEditBookmarkOpen} closeEditBookmark={this.editBookmark} editBoardId={this.state.editingBookmarkId} />
+        <EditBookmark show={this.state.isEditBookmarkOpen} closeEditBookmark={this.editBookmark} editBoardId={this.state.theBoardId} />
       </div>
     );
   }
