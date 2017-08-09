@@ -31,7 +31,13 @@
   background: green;
   margin: 1rem;
 }
-
+.no__image{
+  height: 60px;
+  width: 60px;
+  border-radius: 50%;
+  background: white;
+  margin: 1rem;
+}
 .menu__list {
   display: flex;
   flex-flow: column;

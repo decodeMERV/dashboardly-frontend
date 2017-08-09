@@ -25,7 +25,7 @@ class Menu extends Component {
      return api.getProfilePic()
      .then(res => {
        this.setState({
-         url : res.body.avatarUrl
+         url : ""//res.body.avatarUrl
        });
      })
   }
@@ -37,7 +37,8 @@ class Menu extends Component {
       <div className={`menu ${show?"show":""}`}>
 
         <div className="menu__header">
-          <img src={this.state.url} alt="profile-pic" className="menu__avatar"/>
+          {this.state.url? <img src={this.state.url} alt="profile-pic" className="menu__avatar"/>
+           : <div className="no__image"/> }
         </div>
 
         <div className="menu__list">
