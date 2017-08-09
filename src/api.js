@@ -29,14 +29,11 @@ class Api {
     superagent
     .get(`${API_HOST}/boards/${boardId}/bookmarks`)
   )
-
   getProfilePic = () =>(
     superagent
     .get(`${API_HOST}/auth/me`)
 
   )
-
-
 
   getCurrentUser = () => (
     superagent
@@ -61,7 +58,12 @@ class Api {
       .post(`${API_HOST}/boards`)
       .send({ title, description })
   )
-  
+  createBookmark = (title, url, description, boardId) =>(
+    superagent
+    .post(`${API_HOST}/boards/${boardId}/bookmarks`)
+    .send({title, url, description, boardId})
+  )
+
 }
 
 export default new Api();
