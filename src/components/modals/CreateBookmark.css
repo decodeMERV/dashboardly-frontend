@@ -1,4 +1,4 @@
-.button {
+.createBookmark {
   /*width: 270px;*/
   /*position: fixed;*/
   /*top: 0;*/
@@ -21,7 +21,7 @@
 }
 
 
-.button.show {
+.createBookmark.show {
   /*transform: translateX(0px);*/
   opacity: 1;
   visibility: visible;

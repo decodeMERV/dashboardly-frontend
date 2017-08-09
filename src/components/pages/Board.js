@@ -16,7 +16,7 @@ class Board extends Component {
       bookmarks: [],
       updatedAt: "",
       userId: "",
-      isBookmarkOpen: false
+      isCreateBookmarkOpen: false
     };
   }
 
@@ -42,13 +42,10 @@ class Board extends Component {
       .catch(console.error)
   }
   handleClickOutside = (e) => {
-    console.log("line 45",this.state.isBookmarkOpen)
     this.setState({
-        isBookmarkOpen: false
+        isCreateBookmarkOpen: false
     })
   }
-
-
 
   render() {
     let { bookmarks } = this.state
@@ -67,10 +64,10 @@ class Board extends Component {
         )}
       </div>
       <div >
-        {this.state.userId !== this.state.ownerId ? //for testing purposes we will set !== since userId & ownerId mock data are always not equal
-              <AddButton onClick={()=>this.setState({isBookmarkOpen: !this.state.isBookmarkOpen})}  />
-        : 'null' }
-        <CreateBookmark closeBookmark={this.handleClickOutside} show={this.state.isBookmarkOpen}/>
+        {this.state.userId === this.state.ownerId ?
+              <AddButton onClick={()=>this.setState({isCreateBookmarkOpen: !this.state.isCreateBookmarkOpen})}/>
+        : null }
+        <CreateBookmark closeBookmark={this.handleClickOutside} show={this.state.isCreateBookmarkOpen}/>
       </div>
     </div>
     );

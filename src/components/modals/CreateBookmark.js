@@ -19,16 +19,17 @@ class CreateBookmark extends Component {
   handleClickOutside = (e) => {
     this.props.closeBookmark();
   }
-  handleClick = (e) => {
-    e.preventDefault();
-
+  handleClick = () => {
     if(this.refs.title.value === "" || this.refs.url.value ===""){
         this.setState({result: "You're missing the title or the link!"})
     }
     else if(this.refs.title.value && this.refs.url.value){
 
           api.createBookmark(this.refs.title.value, this.refs.url.value, this.refs.description.value, this.props.params.id)
-          .then(res=> this.props.router.push(`/boards/${this.props.params.id}`))
+          .then(res=> {
+            this.props.router.push(`/boards/${this.props.params.id}`);
+            this.props.closeBookmark();
+          })
     }
   }
   _handleTyping = (e) => {
@@ -51,15 +52,15 @@ class CreateBookmark extends Component {
   }
   render() {
     return (
-      <div className={`button ${this.props.show?"show":""}`}>
+      <div className={`createBookmark ${this.props.show?"show":""}`}>
         <h1>Create New Place </h1>
-        <form>
-          <input placeholder='Title' type='text' ref='title'/>
-          <input placeholder='Url' type='text' ref='url'/>
+
+          <input placeholder='Title' type='text' ref='title' onKeyUp={this._handleTyping}/>
+          <input placeholder='Url' type='text' ref='url' onKeyUp={this._handleTyping}/>
           <input placeholder='Description' type='text' ref='description' onKeyUp={this._handleTyping} onInput={this._handleInput} value={this.state.currentInput}/>
-          <button type='submit' onClick={(e)=>this.handleClick(e)}>Create </button>
+          <button type='submit' onClick={this.handleClick}>Create </button>
           <h4> {this.state.error?"Error: " + this.state.error : ""} <span>{this.state.currentInput.length}/80</span> </h4>
-        </form>
+
         <h5> {this.state.result} </h5>
       </div>
     );
