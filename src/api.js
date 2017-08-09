@@ -34,6 +34,12 @@ class Api {
     superagent
       .get(`${API_HOST}/auth/me`)
   )
+
+  editBoard = (id, title, description) => {
+     return superagent
+      .patch(`${API_HOST}/boards/${id}`)
+      .send({title, description})
+  }
   
 }
 
