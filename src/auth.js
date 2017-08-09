@@ -27,5 +27,5 @@ module.exports = {
   getCurrentLoggedInUser() {
     return api.getCurrentUser();
   }
-  
+
 }

@@ -18,12 +18,12 @@ export default class Home extends Component {
       isCreateBoardOpen: false
     };
   }
-  
+
   componentDidMount() {
     this._fetchBoards();
     this._fetchCurrentUser();
   }
-  
+
   _fetchBoards = () => {
     api.getBoardsList()
     .then(res => {

@@ -26,7 +26,7 @@ class Menu extends Component {
      return api.getProfilePic()
      .then(res => {
        this.setState({
-         url : ""//res.body.avatarUrl
+         url : res.body.avatarUrl
        });
      })
   }
