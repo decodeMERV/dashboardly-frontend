@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import './CreateBookmark.css';
 import api from '../../api';
 import onClickOutside from 'react-onclickoutside';
-import Board from '../pages/Board';
+//import Board from '../pages/Board';
 import {withRouter} from 'react-router';
 
 const ENTER = 13;
@@ -54,9 +54,9 @@ class CreateBookmark extends Component {
       <div className={`button ${this.props.show?"show":""}`}>
         <h1>Create New Place </h1>
         <form>
-          <input type='text' ref='title'/>
-          <input type='text' ref='url'/>
-          <input type='text' ref='description' onKeyUp={this._handleTyping} onInput={this._handleInput} value={this.state.currentInput}/>
+          <input placeholder='Title' type='text' ref='title'/>
+          <input placeholder='Url' type='text' ref='url'/>
+          <input placeholder='Description' type='text' ref='description' onKeyUp={this._handleTyping} onInput={this._handleInput} value={this.state.currentInput}/>
           <button type='submit' onClick={(e)=>this.handleClick(e)}>Create </button>
           <h4> {this.state.error?"Error: " + this.state.error : ""} <span>{this.state.currentInput.length}/80</span> </h4>
         </form>

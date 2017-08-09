@@ -3,7 +3,7 @@ import api from '../../api';
 import auth from '../../auth';
 import BookmarkCard from '../elements/BookmarkCard';
 import AddButton from '../elements/AddButton';
-import onClickOutside from 'react-onclickoutside';
+//import onClickOutside from 'react-onclickoutside';
 import CreateBookmark from '../modals/CreateBookmark';
 import './Board.css';
 
@@ -67,7 +67,7 @@ class Board extends Component {
         )}
       </div>
       <div >
-        {this.state.userId !== this.state.ownerId ? //for the purpose of testing we will set !== because userId & ownerId dummy data are always not equal
+        {this.state.userId !== this.state.ownerId ? //for testing purposes we will set !== since userId & ownerId mock data are always not equal
               <AddButton onClick={()=>this.setState({isBookmarkOpen: !this.state.isBookmarkOpen})}  />
         : 'null' }
         <CreateBookmark closeBookmark={this.handleClickOutside} show={this.state.isBookmarkOpen}/>
