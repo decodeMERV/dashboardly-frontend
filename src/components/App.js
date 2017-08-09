@@ -8,17 +8,16 @@ class App extends Component {
     super(props)
     this.state = { isMenuOpen: false }
   }
-  
+
   closeMenu = () => this.setState({ isMenuOpen: false })
-  
+
   render() {
     let {isMenuOpen} = this.state
     return (
       <div className="App">
         <div className="App-navbar">
           <i className="fa fa-bars fa-2x menu-icon"
-            onClick={()=>this.setState({ isMenuOpen: !isMenuOpen })}
-          />
+            onClick={()=>this.setState({ isMenuOpen: !isMenuOpen })}/>
           <Link to="/" className="App-navbar__title">Dashboardly</Link>
           <i className="fa fa-cog fa-2x settings-icon"/>
         </div>

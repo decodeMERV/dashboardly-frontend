@@ -23,5 +23,8 @@ module.exports = {
   isLoggedIn() {
     return !!localStorage.token
   },
-  
+  getCurrentLoggedInUser() {
+    return api.getCurrentUser();
+  }
+
 }
