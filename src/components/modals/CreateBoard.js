@@ -3,6 +3,7 @@ import './CreateBoard.css';
 import onClickOutside from 'react-onclickoutside';
 import api from '../../api';
 import { withRouter } from 'react-router'
+import auth from '../../auth';
 
 const ENTER = 13;
 const CHARLIMIT = 80;
@@ -44,7 +45,7 @@ class CreateBoard extends Component {
       this.setState({ error: "Please both the title and description!  "})
     }
     else if (this.refs.title.value && this.refs.desc.value) {
-      api.createBoard(this.refs.title.value, this.refs.desc.value)
+      api.createBoard(this.refs.title.value, this.refs.desc.value, auth.getToken())
         .then(res => this.props.router.push(`/boards/${res.body.id}`))
     }
   }

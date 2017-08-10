@@ -33,21 +33,24 @@ class Board extends Component {
       Promise.all([
         api.getBoard(this.props.params.id),
         api.getBookmarks(this.props.params.id),
-        auth.getCurrentLoggedInUser()
+        // auth.getCurrentLoggedInUser()
       ])
       .then(res => {
+        console.log("ASDSDA");
         this.setState({
           title: res[0].body.title,
           description: res[0].body.description,
           bookmarks: res[1].body.bookmarks,
-          userId: res[2].body.id,
-          ownerId:res[0].body.ownerId
+          // userId: res[2].body.id,
+          // ownerId:res[0].body.ownerId
         })
         if (res[2].body.id === res[0].body.ownerId /*123*/){ //TODO: 123 is testing with apiary
           this.setState( {userOwns: true} );
         }
       })
-      .catch(console.error)
+      .catch( error => {
+        console.log("Error!", error);
+      })
   }
 
   handleClickOutside = (e) => {

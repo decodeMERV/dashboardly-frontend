@@ -4,6 +4,7 @@ import api from '../../api';
 import onClickOutside from 'react-onclickoutside';
 //import Board from '../pages/Board';
 import {withRouter} from 'react-router';
+import auth from '../../auth';
 
 const ENTER = 13;
 const CHARLIMIT = 80;
@@ -25,7 +26,7 @@ class CreateBookmark extends Component {
     }
     else if(this.refs.title.value && this.refs.url.value){
 
-          api.createBookmark(this.refs.title.value, this.refs.url.value, this.refs.description.value, this.props.params.id)
+          api.createBookmark(this.refs.title.value, this.refs.url.value, this.refs.description.value, this.props.params.id, auth.getToken())
           .then(res=> {
             this.props.router.push(`/boards/${this.props.params.id}`);
             this.props.closeBookmark();
