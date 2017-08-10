@@ -3,6 +3,7 @@ import './DeleteBoard.css';
 import onClickOutside from 'react-onclickoutside';
 import api from '../../api';
 import {withRouter} from 'react-router';
+import auth from '../../auth';
 
 class DeleteBoard extends Component{
   constructor(props){
@@ -16,7 +17,7 @@ class DeleteBoard extends Component{
   }
 
   _handleDeleteBoard = () => {
-    api.deleteBoard(this.props.deleteBoardId)
+    api.deleteBoard(this.props.deleteBoardId, auth.getToken())
       .then(res => {
         this.props.router.push('/');
         this.props.closeDeleteBoard();

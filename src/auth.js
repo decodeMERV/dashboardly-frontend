@@ -24,8 +24,8 @@ module.exports = {
     return !!localStorage.token
   },
 
-  getCurrentLoggedInUser() {
-    return api.getCurrentUser();
+  getCurrentLoggedInUser(token) {
+    return api.getCurrentUser(token);
   },
 
   signUp(email, pass){

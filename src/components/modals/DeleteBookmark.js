@@ -3,6 +3,7 @@ import './DeleteBookmark.css';
 import onClickOutside from 'react-onclickoutside';
 import api from '../../api';
 import {withRouter} from 'react-router';
+import auth from '../../auth';
 
 class DeleteBookmark extends Component {
   constructor(props){
@@ -16,10 +17,10 @@ class DeleteBookmark extends Component {
   }
 
   _handleDeleteBookmark = () => {
-    api.deleteBookmark(this.props.deleteBMId)
+    api.deleteBookmark(this.props.deleteBMId, auth.getToken())
       .then(res => {
         this.props.router.push(`/boards/${this.props.deleteBMBoardId}`);
-        this.props.closeDeleteBookmark();
+        this.props.confirmDeletionBM();
       })
       .catch(error => this.setState({error: "Error during DELETING to backend " + error}))
   }

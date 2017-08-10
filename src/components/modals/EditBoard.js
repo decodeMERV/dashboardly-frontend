@@ -3,6 +3,7 @@ import './EditBoard.css';
 import onClickOutside from 'react-onclickoutside';
 import api from '../../api';
 import {withRouter} from 'react-router';
+import auth from '../../auth';
 
 const ENTER = 13;
 const CHARLIMIT = 80;
@@ -45,7 +46,7 @@ class editBoard extends Component{
       this.setState({ error: "Please enter both fields! "})
     }
     else if (this.refs.title.value && this.refs.desc.value) {
-      api.editBoard(this.props.editBoardId, this.refs.title.value, this.refs.desc.value)
+      api.editBoard(this.props.editBoardId, this.refs.title.value, this.refs.desc.value, auth.getToken())
         .then(res => {
           this.props.router.push('/');
           this.props.closeEditBoard();

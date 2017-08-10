@@ -23,7 +23,7 @@ class Menu extends Component {
   }
 
   fetchProfilePic = () => {
-     return api.getProfilePic()
+     return api.getCurrentUser(auth.getToken())
      .then(res => {
        this.setState({
          url : res.body.avatarUrl

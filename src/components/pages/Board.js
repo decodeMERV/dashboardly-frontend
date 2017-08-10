@@ -21,7 +21,8 @@ class Board extends Component {
       isEditBookmarkOpen: false,
       userId: "",
       isCreateBookmarkOpen: false,
-      isDeleteBookmarkOpen: false
+      isDeleteBookmarkOpen: false,
+      isBookmarkChanged : false
     };
   }
 
@@ -29,20 +30,26 @@ class Board extends Component {
     this.fetchBoardData()
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.isBookmarkChanged !== prevState.isBookmarkChanged){
+      this.fetchBoardData();
+    }
+  }
+
   fetchBoardData = () => {
       Promise.all([
         api.getBoard(this.props.params.id),
         api.getBookmarks(this.props.params.id),
-        // auth.getCurrentLoggedInUser()
+        auth.getCurrentLoggedInUser(auth.getToken())
       ])
       .then(res => {
-        console.log("ASDSDA");
+        console.log("WORKS");
         this.setState({
           title: res[0].body.title,
           description: res[0].body.description,
           bookmarks: res[1].body.bookmarks,
-          // userId: res[2].body.id,
-          // ownerId:res[0].body.ownerId
+          userId: res[2].body.id,
+          ownerId:res[0].body.ownerId
         })
         if (res[2].body.id === res[0].body.ownerId /*123*/){ //TODO: 123 is testing with apiary
           this.setState( {userOwns: true} );
@@ -62,6 +69,8 @@ class Board extends Component {
   editBookmark = () => this.setState ({isEditBookmarkOpen : false});
 
   closeDeleteBookmark = () => this.setState ({isDeleteBookmarkOpen : false});
+
+  confirmDeleteBookmark = () => this.setState ({isDeleteBookmarkOpen: false, isBookmarkChanged: !this.state.isBookmarkChanged});
 
   render() {
     let { bookmarks } = this.state
@@ -97,7 +106,7 @@ class Board extends Component {
               <AddButton onClick={()=>this.setState({isCreateBookmarkOpen: !this.state.isCreateBookmarkOpen})}/>
         : null }
         <CreateBookmark closeBookmark={this.handleClickOutside} show={this.state.isCreateBookmarkOpen}/>
-        <DeleteBookmark closeDeleteBookmark={this.closeDeleteBookmark} show={this.state.isDeleteBookmarkOpen} deleteBMTitle={this.state.deleteBookmarkTitle} deleteBMId={this.state.deleteBookmarkId} deleteBMBoardId={this.state.deleteBookmarkBoardId} />
+        <DeleteBookmark closeDeleteBookmark={this.closeDeleteBookmark} show={this.state.isDeleteBookmarkOpen} deleteBMTitle={this.state.deleteBookmarkTitle} deleteBMId={this.state.deleteBookmarkId} deleteBMBoardId={this.state.deleteBookmarkBoardId} confirmDeletionBM={this.confirmDeleteBookmark} />
       </div>
     </div>
     );

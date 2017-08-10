@@ -3,6 +3,7 @@ import './EditBookmark.css';
 import onClickOutside from 'react-onclickoutside';
 import api from '../../api';
 import {withRouter} from 'react-router';
+import auth from '../../auth';
 
 const ENTER = 13;
 const CHARLIMIT = 80;
@@ -45,7 +46,7 @@ class EditBookmark extends Component{
       this.setState({ error: "Please enter url and title! "})
     }
     else if (this.refs.title.value && this.refs.url.value){
-      api.editBookmark(this.props.editBoardId, this.refs.title.value, this.refs.url.value, this.refs.desc.value)
+      api.editBookmark(this.props.editBoardId, this.refs.title.value, this.refs.url.value, this.refs.desc.value, auth.getToken())
         .then(res => {
           this.props.router.push(`/boards/${this.props.editBoardId}`);
           this.props.closeEditBookmark();

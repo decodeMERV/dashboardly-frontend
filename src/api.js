@@ -34,12 +34,6 @@ class Api {
     .set('Content-Type', 'application/json')
   )
 
-  getProfilePic = () =>( //TODO: delete this to and use getCurrentUser()
-    superagent
-    .get(`${API_HOST}/auth/me`)
-
-  )
-
   getCurrentUser = (token) => (
     superagent
       .get(`${API_HOST}/auth/me`)
@@ -75,7 +69,7 @@ class Api {
     superagent
     .post(`${API_HOST}/boards/${boardId}/bookmarks`)
     .set('Content-Type', 'application/json')
-    .set('Authorization', `token ${token}`)
+    .set('Authorization', `token  ${token}`)
     .send({title, url, description, boardId})
   )
 
