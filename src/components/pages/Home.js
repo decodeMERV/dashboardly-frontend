@@ -7,6 +7,8 @@ import './Home.css';
 import EditButton from '../elements/EditButton';
 import EditBoard from '../modals/EditBoard';
 import CreateBoard from "../modals/CreateBoard";
+import DeleteButton from "../elements/DeleteButton";
+import DeleteBoard from "../modals/DeleteBoard";
 
 export default class Home extends Component {
   constructor(props) {
@@ -15,7 +17,8 @@ export default class Home extends Component {
       boards: [],
       isEditBoardOpen: false,
       editingBoardID: "",
-      isCreateBoardOpen: false
+      isCreateBoardOpen: false,
+      isDeleteBoardOpen: false
     };
   }
 
@@ -43,6 +46,8 @@ export default class Home extends Component {
 
   closeCreateBoard = () => this.setState({ isCreateBoardOpen: false });
 
+  closeDeleteBoard = () => this.setState({ isDeleteBoardOpen: false });
+
   render() {
     let { boards } = this.state
     return (
@@ -55,12 +60,17 @@ export default class Home extends Component {
               description={b.description}
               updatedAt={b.updatedAt}
             />
-            {b.ownerId === this.state.userId ? <EditButton onClick={ () => this.setState({ isEditBoardOpen : !this.state.isEditBoardOpen, editingBoardID : b.id}) } /> : ""}
+            {b.ownerId === this.state.userId ?
+              <div>
+                <EditButton onClick={ () => this.setState({ isEditBoardOpen : !this.state.isEditBoardOpen, editingBoardID : b.id}) } />
+                <DeleteButton onClick={ () => this.setState({ isDeleteBoardOpen : !this.state.isDeleteBoardOpen, deletingBoardID : b.id, deleteTitle : b.title })}/>
+              </div> : ""}
           </div>
         )}
         <EditBoard show={this.state.isEditBoardOpen} closeEditBoard={this.editBoard} editBoardId={this.state.editingBoardID} /*We need to the editBoardId state to be transferred from the onClick event, namely as each onClick will be dynamically generated*/ />
         {auth.isLoggedIn() ? <AddButton onClick={ ()=>this.setState({ isCreateBoardOpen : !this.state.isCreateBoardOpen }) } /> : null}
-          <CreateBoard show={this.state.isCreateBoardOpen} closeCreateBoard={ this.closeCreateBoard } />
+        <CreateBoard show={this.state.isCreateBoardOpen} closeCreateBoard={ this.closeCreateBoard } />
+        <DeleteBoard show={this.state.isDeleteBoardOpen} closeDeleteBoard={this.closeDeleteBoard} deleteBoardId={this.state.deletingBoardID} deleteTitle={this.state.deleteTitle}/>
       </div>
     );
   }

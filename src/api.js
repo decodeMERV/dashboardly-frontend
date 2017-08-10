@@ -70,6 +70,16 @@ class Api {
       .post(`${API_HOST}/auth/users`)
       .send({email, password})
   )
+
+  deleteBoard = (boardId) => (
+    superagent
+      .delete(`${API_HOST}/boards/${boardId}`)
+  )
+
+  deleteBookmark = (bookmarkId) => (
+    superagent
+      .delete(`${API_HOST}/bookmarks/${bookmarkId}`)
+  )
 }
 
 export default new Api();

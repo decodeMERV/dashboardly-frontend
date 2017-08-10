@@ -1,0 +1,21 @@
+.deleteBookmark {
+  width: 270px;
+  position: fixed;
+  top: 5rem;
+  left: 5rem;
+  z-index: 10;
+  background: lightgrey;
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -o-transition: 0.5s;
+  transition: 0.5s;
+  transform: translateX(-270px);
+  opacity: 0;
+  visibility: hidden;
+}
+
+.deleteBookmark.show {
+  transform: translateX(0px);
+  opacity: 1;
+  visibility: visible;
+}

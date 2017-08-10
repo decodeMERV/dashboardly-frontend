@@ -7,6 +7,8 @@ import CreateBookmark from '../modals/CreateBookmark';
 import './Board.css';
 import EditButton from '../elements/EditButton';
 import EditBookmark from '../modals/EditBookmark';
+import DeleteButton from '../elements/DeleteButton';
+import DeleteBookmark from '../modals/DeleteBookmark';
 
 class Board extends Component {
   constructor(props) {
@@ -18,7 +20,8 @@ class Board extends Component {
       updatedAt: "",
       isEditBookmarkOpen: false,
       userId: "",
-      isCreateBookmarkOpen: false
+      isCreateBookmarkOpen: false,
+      isDeleteBookmarkOpen: false
     };
   }
 
@@ -46,6 +49,7 @@ class Board extends Component {
       })
       .catch(console.error)
   }
+
   handleClickOutside = (e) => {
     this.setState({
         isCreateBookmarkOpen: false
@@ -53,6 +57,8 @@ class Board extends Component {
   }
 
   editBookmark = () => this.setState ({isEditBookmarkOpen : false});
+
+  closeDeleteBookmark = () => this.setState ({isDeleteBookmarkOpen : false});
 
   render() {
     let { bookmarks } = this.state
@@ -68,7 +74,17 @@ class Board extends Component {
               description={b.description}
               url={b.url}
             />
-            {this.state.userOwns ? <EditButton onClick={ () => this.setState({ isEditBookmarkOpen : !this.state.isEditBookmarkOpen,  theBoardId : b.boardId}) } /> : ""}
+            {this.state.userOwns ?
+              <div>
+                <EditButton onClick={ () => this.setState({ isEditBookmarkOpen : !this.state.isEditBookmarkOpen,  theBoardId : b.boardId}) } />
+                <DeleteButton onClick={ () => this.setState({
+                  isDeleteBookmarkOpen : !this.state.isDeleteBookmarkOpen,
+                  deleteBookmarkTitle : b.title,
+                  deleteBookmarkId : b.id,
+                  deleteBookmarkBoardId : b.boardId
+                })}/>
+              </div>
+              : ""}
           </div>
         )}
         <EditBookmark show={this.state.isEditBookmarkOpen} closeEditBookmark={this.editBookmark} editBoardId={this.state.theBoardId} />
@@ -78,6 +94,7 @@ class Board extends Component {
               <AddButton onClick={()=>this.setState({isCreateBookmarkOpen: !this.state.isCreateBookmarkOpen})}/>
         : null }
         <CreateBookmark closeBookmark={this.handleClickOutside} show={this.state.isCreateBookmarkOpen}/>
+        <DeleteBookmark closeDeleteBookmark={this.closeDeleteBookmark} show={this.state.isDeleteBookmarkOpen} deleteBMTitle={this.state.deleteBookmarkTitle} deleteBMId={this.state.deleteBookmarkId} deleteBMBoardId={this.state.deleteBookmarkBoardId} />
       </div>
     </div>
     );
