@@ -72,6 +72,8 @@ class Board extends Component {
 
   confirmDeleteBookmark = () => this.setState ({isDeleteBookmarkOpen: false, isBookmarkChanged: !this.state.isBookmarkChanged});
 
+  reFetchAfterChange = () => this.setState ({ isBookmarkChanged: !this.state.isBookmarkChanged});
+
   render() {
     let { bookmarks } = this.state
 
@@ -88,7 +90,7 @@ class Board extends Component {
             />
             {this.state.userOwns ?
               <div>
-                <EditButton onClick={ () => this.setState({ isEditBookmarkOpen : !this.state.isEditBookmarkOpen,  theBoardId : b.boardId}) } />
+                <EditButton onClick={ () => this.setState({ isEditBookmarkOpen : !this.state.isEditBookmarkOpen,  theBMId : b.id, theBoardId : b.boardId}) } />
                 <DeleteButton onClick={ () => this.setState({
                   isDeleteBookmarkOpen : !this.state.isDeleteBookmarkOpen,
                   deleteBookmarkTitle : b.title,
@@ -99,7 +101,7 @@ class Board extends Component {
               : ""}
           </div>
         )}
-        <EditBookmark show={this.state.isEditBookmarkOpen} closeEditBookmark={this.editBookmark} editBoardId={this.state.theBoardId} />
+        <EditBookmark show={this.state.isEditBookmarkOpen} closeEditBookmark={this.editBookmark} editBookmarkId={this.state.theBMId} editBoardId={this.state.theBoardId} />
       </div>
       <div >
         {this.state.userId === this.state.ownerId ?

@@ -69,7 +69,7 @@ class Api {
     superagent
     .post(`${API_HOST}/boards/${boardId}/bookmarks`)
     .set('Content-Type', 'application/json')
-    .set('Authorization', `token  ${token}`)
+    .set('Authorization', `token ${token}`)
     .send({title, url, description, boardId})
   )
 

@@ -25,11 +25,13 @@ class CreateBookmark extends Component {
         this.setState({result: "You're missing the title or the link!"})
     }
     else if(this.refs.title.value && this.refs.url.value){
-
           api.createBookmark(this.refs.title.value, this.refs.url.value, this.refs.description.value, this.props.params.id, auth.getToken())
           .then(res=> {
             this.props.router.push(`/boards/${this.props.params.id}`);
             this.props.closeBookmark();
+          })
+          .catch(error => {
+            console.log("Error during creating bookmark", error)
           })
     }
   }
