@@ -27,10 +27,12 @@ class Board extends Component {
   }
 
   componentDidMount() {
+    // console.log("MOUNTED")
     this.fetchBoardData()
   }
 
   componentDidUpdate(prevProps, prevState) {
+    // console.log("DIDUPDATE");
     if (this.state.isBookmarkChanged !== prevState.isBookmarkChanged){
       this.fetchBoardData();
     }

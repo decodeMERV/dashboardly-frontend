@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import onClickOutside from 'react-onclickoutside';
 import auth from '../../auth';
-import api from '../../api';
 import './Menu.css';
 import Logout from "../Logout";
 
@@ -12,7 +11,7 @@ class Menu extends Component {
   constructor(props){
     super(props);
     this.state = {
-      isUserLoggedIn : false
+      url : ""
     };
   }
 
@@ -25,21 +24,30 @@ class Menu extends Component {
   }
 
   componentDidUpdate(prevProps, prevState){
-    if (this.state.isUserLoggedIn !== prevState.isUserLoggedIn) {
-      this.setState({ url: ""})
+    // console.log(prevState, "prevState");
+    // console.log(auth.isLoggedIn());
+    if (auth.isLoggedIn()) {
+      if(this.state.url.length <= 0 ){
+        this.fetchProfilePic();
+      }
+    }
+    else {
+      if (this.state.url.length > 0){
+        this.setState({ url: "" });
+      }
     }
   }
 
   fetchProfilePic = () => {
-     return auth.getCurrentLoggedInUser(auth.getToken())
-     .then(res => {
-       this.setState({
-         url : res.body.avatarUrl
-       });
-     })
-     .catch(error => {
-       console.log("error, user not logged in to get pic " + error);
-     })
+    return auth.getCurrentLoggedInUser(auth.getToken())
+      .then(res => {
+        this.setState({
+          url : res.body.avatarUrl
+        });
+      })
+      .catch(error => {
+        console.log("error, user not logged in to get pic " + error);
+      })
   }
 
   changeLoggedIn = () => { this.setState({isUserLoggedIn : !this.state.isUserLoggedIn}) }
@@ -52,7 +60,7 @@ class Menu extends Component {
 
         <div className="menu__header">
           {this.state.url? <img src={this.state.url} alt="profile-pic" className="menu__avatar"/>
-           : <div className="no__image"/> }
+            : <div className="no__image"/> }
         </div>
 
         <div className="menu__list">
@@ -65,19 +73,19 @@ class Menu extends Component {
             <Link to="/login" className="menu__item" onClick={closeMenu}>
               Login
             </Link>
-          : null}
+            : null}
 
           {!isLoggedIn ?
             <Link to="/signup" className="menu__item" onClick={closeMenu}>
               Signup
             </Link>
-          : null}
+            : null}
 
           {isLoggedIn ?
             <div className="menu__item" onClick={closeMenu}>
               <Logout buttonText="Logout" clickedLogout={this.changeLoggedIn}/>
             </div>
-          : null}
+            : null}
         </div>
 
       </div>
