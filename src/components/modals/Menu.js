@@ -11,7 +11,9 @@ class Menu extends Component {
 
   constructor(props){
     super(props);
-    this.state = {};
+    this.state = {
+      isUserLoggedIn : false
+    };
   }
 
   handleClickOutside = () => {
@@ -20,6 +22,12 @@ class Menu extends Component {
 
   componentDidMount(){
     this.fetchProfilePic()
+  }
+
+  componentDidUpdate(prevProps, prevState){
+    if (this.state.isUserLoggedIn !== prevState.isUserLoggedIn) {
+      this.setState({ url: ""})
+    }
   }
 
   fetchProfilePic = () => {
@@ -33,6 +41,8 @@ class Menu extends Component {
        console.log("error, user not logged in to get pic " + error);
      })
   }
+
+  changeLoggedIn = () => { this.setState({isUserLoggedIn : !this.state.isUserLoggedIn}) }
 
   render() {
     let { closeMenu, show } = this.props
@@ -65,7 +75,7 @@ class Menu extends Component {
 
           {isLoggedIn ?
             <div className="menu__item" onClick={closeMenu}>
-              <Logout buttonText="Logout"/>
+              <Logout buttonText="Logout" clickedLogout={this.changeLoggedIn}/>
             </div>
           : null}
         </div>
