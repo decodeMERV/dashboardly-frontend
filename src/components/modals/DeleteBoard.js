@@ -20,7 +20,7 @@ class DeleteBoard extends Component{
     api.deleteBoard(this.props.deleteBoardId, auth.getToken())
       .then(res => {
         this.props.router.push('/');
-        this.props.closeDeleteBoard();
+        this.props.closeDeleteBoard(true);
       })
       .catch(error => this.setState({error: "Error during DELETING to backend " + error}))
   }

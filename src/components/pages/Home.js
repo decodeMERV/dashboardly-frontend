@@ -18,13 +18,21 @@ export default class Home extends Component {
       isEditBoardOpen: false,
       editingBoardID: "",
       isCreateBoardOpen: false,
-      isDeleteBoardOpen: false
+      isDeleteBoardOpen: false,
+      isBoardChanged: false,
+      isConfirmBoardOpen: false
     };
   }
 
   componentDidMount() {
     this._fetchBoards();
     this._fetchCurrentUser();
+  }
+
+  componentDidUpdate(prevProps, prevState){
+    if(this.state.isBoardChanged !== prevState.isBoardChanged){
+      this._fetchBoards();
+    }
   }
 
   _fetchBoards = () => {
@@ -42,11 +50,16 @@ export default class Home extends Component {
       })
   }
 
-  editBoard = () => this.setState({ isEditBoardOpen: false });
-
+  editBoard = (editOrNot) =>{
+    this.setState({ isEditBoardOpen: false });
+    if(editOrNot){ this.setState ({isBoardChanged:!this.state.isBoardChanged}); }
+  }
   closeCreateBoard = () => this.setState({ isCreateBoardOpen: false });
 
-  closeDeleteBoard = () => this.setState({ isDeleteBoardOpen: false });
+  closeDeleteBoard = (deleteOrNot) => {
+    this.setState({ isDeleteBoardOpen: false });
+    if (deleteOrNot){ this.setState ({isBoardChanged: !this.state.isBoardChanged}); }
+  }
 
   render() {
     let { boards } = this.state

@@ -6,13 +6,18 @@ const ENTER = 13;
 
 export default class Login extends Component {
 
+  constructor(){
+    super();
+    this.state={}
+  }
+
   _handleLogin = () => {
     // deep destructuring equivalent to (let email = this.refs.email.value;)
     let { email: {value: email}, password: {value: password} } = this.refs;
     if (email && password) {
       auth.login(email, password)
       .then(res => this.props.router.push('/'))
-      .catch(console.error)
+      .catch( () => this.setState({theError : "Wrong username or password"}) )
     }
     else {
       this.setState({ error: "Please enter an email and password"})
@@ -38,6 +43,7 @@ export default class Login extends Component {
           onKeyUp={this._handleTyping}
         />
         <button onClick={this._handleLogin}>login</button>
+        <h3>{this.state.theError}</h3>
       </div>
     );
   }

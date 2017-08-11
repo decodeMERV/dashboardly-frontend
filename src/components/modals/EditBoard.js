@@ -49,7 +49,7 @@ class editBoard extends Component{
       api.editBoard(this.props.editBoardId, this.refs.title.value, this.refs.desc.value, auth.getToken())
         .then(res => {
           this.props.router.push('/');
-          this.props.closeEditBoard();
+          this.props.closeEditBoard(true);
         })
         .catch(error => this.setState({error: "Error during PATCHING to backend " + error}))
     }
