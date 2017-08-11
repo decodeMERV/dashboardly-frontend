@@ -23,11 +23,14 @@ class Menu extends Component {
   }
 
   fetchProfilePic = () => {
-     return api.getCurrentUser(auth.getToken())
+     return auth.getCurrentLoggedInUser(auth.getToken())
      .then(res => {
        this.setState({
          url : res.body.avatarUrl
        });
+     })
+     .catch(error => {
+       console.log("error, user not logged in to get pic " + error);
      })
   }
 

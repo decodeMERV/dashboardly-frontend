@@ -40,24 +40,24 @@ class Board extends Component {
       Promise.all([
         api.getBoard(this.props.params.id),
         api.getBookmarks(this.props.params.id),
-        auth.getCurrentLoggedInUser(auth.getToken())
       ])
       .then(res => {
-        console.log("WORKS");
         this.setState({
           title: res[0].body.title,
           description: res[0].body.description,
           bookmarks: res[1].body.bookmarks,
-          userId: res[2].body.id,
           ownerId:res[0].body.ownerId
         })
-        if (res[2].body.id === res[0].body.ownerId /*123*/){ //TODO: 123 is testing with apiary
+      })
+      .catch(error => {console.log("Error during loading bookmarks", error);})
+      .then( () => { return auth.getCurrentLoggedInUser(auth.getToken()) } )
+      .then(resAuth => {
+        this.setState({ userId: resAuth.body.id});
+        if (resAuth.body.id === this.state.ownerId /*123*/){ //TODO: 123 is testing with apiary
           this.setState( {userOwns: true} );
         }
       })
-      .catch( error => {
-        console.log("Error!", error);
-      })
+      .catch( error => {console.log("Error during loading user Authentication for bookmarks: ", error);})
   }
 
   createBookMark = (createOrNot) => {
