@@ -49,7 +49,7 @@ class EditBookmark extends Component{
       api.editBookmark(this.props.editBookmarkId, this.refs.title.value, this.refs.url.value, this.refs.desc.value, auth.getToken())
         .then(res => {
           this.props.router.push(`/boards/${this.props.editBoardId}`);
-          this.props.closeEditBookmark();
+          this.props.closeEditBookmark(true);
         })
         .catch(error => this.setState({error: "Error during PATCHING to backend " + error}))
     }

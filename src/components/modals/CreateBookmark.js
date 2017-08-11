@@ -18,7 +18,7 @@ class CreateBookmark extends Component {
     };
   }
   handleClickOutside = (e) => {
-    this.props.closeBookmark();
+    this.props.closeCreateBookmark();
   }
   handleClick = () => {
     if(this.refs.title.value === "" || this.refs.url.value ===""){
@@ -28,7 +28,7 @@ class CreateBookmark extends Component {
           api.createBookmark(this.refs.title.value, this.refs.url.value, this.refs.description.value, this.props.params.id, auth.getToken())
           .then(res=> {
             this.props.router.push(`/boards/${this.props.params.id}`);
-            this.props.closeBookmark();
+            this.props.closeCreateBookmark(true);
           })
           .catch(error => {
             console.log("Error during creating bookmark", error)

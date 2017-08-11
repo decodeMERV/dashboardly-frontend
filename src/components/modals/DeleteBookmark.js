@@ -20,7 +20,7 @@ class DeleteBookmark extends Component {
     api.deleteBookmark(this.props.deleteBMId, auth.getToken())
       .then(res => {
         this.props.router.push(`/boards/${this.props.deleteBMBoardId}`);
-        this.props.confirmDeletionBM();
+        this.props.closeDeleteBookmark(true);
       })
       .catch(error => this.setState({error: "Error during DELETING to backend " + error}))
   }
