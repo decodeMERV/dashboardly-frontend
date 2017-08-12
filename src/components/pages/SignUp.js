@@ -15,7 +15,9 @@ export default class SignUp extends Component {
     let password = this.refs.pw.value;
     if (email && password) { //i.e. if they exist
       auth.signUp(email, password)
-        .then(res => this.props.router.push('/login'))
+        .then(res => {
+          this.props.router.push('/login')
+        })
         .catch( (error) => {
           this.setState({error: "Something went wrong with the sign up authorization process" + error})
         });
