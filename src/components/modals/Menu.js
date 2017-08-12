@@ -24,8 +24,6 @@ class Menu extends Component {
   }
 
   componentDidUpdate(prevProps, prevState){
-    // console.log(prevState, "prevState");
-    // console.log(auth.isLoggedIn());
     if (auth.isLoggedIn()) {
       if(this.state.url.length <= 0 ){
         this.fetchProfilePic();
@@ -53,6 +51,7 @@ class Menu extends Component {
   changeLoggedIn = () => { this.setState({isUserLoggedIn : !this.state.isUserLoggedIn}) }
 
   render() {
+    console.log("RENDERED MENU");
     let { closeMenu, show } = this.props
     const isLoggedIn = auth.isLoggedIn()
     return (

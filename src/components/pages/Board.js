@@ -14,10 +14,7 @@ class Board extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: "",
-      description: "",
       bookmarks: [],
-      updatedAt: "",
       isEditBookmarkOpen: false,
       userId: "",
       isCreateBookmarkOpen: false,
@@ -27,12 +24,12 @@ class Board extends Component {
   }
 
   componentDidMount() {
-    // console.log("MOUNTED")
+    console.log("BOARD MOUNTED")
     this.fetchBoardData()
   }
 
   componentDidUpdate(prevProps, prevState) {
-    // console.log("DIDUPDATE");
+    console.log("BOARD DIDUPDATE");
     if (this.state.isBookmarkChanged !== prevState.isBookmarkChanged){
       this.fetchBoardData();
     }
@@ -63,21 +60,25 @@ class Board extends Component {
   }
 
   createBookMark = (createOrNot) => {
+    console.log("CREATEBM");
     this.setState({ isCreateBookmarkOpen: false });
     if (createOrNot){ this.setState ({isBookmarkChanged: !this.state.isBookmarkChanged}); }
   }
 
   editBookmark = (editOrNot) => {
+    console.log("EDITBOOKMARK");
     this.setState ({isEditBookmarkOpen : false});
     if (editOrNot){ this.setState ({isBookmarkChanged: !this.state.isBookmarkChanged}); }
   }
 
   closeDeleteBookmark = (deleteOrNot) => {
+    console.log("CLOSEDELETEBOOKMARK")
     this.setState ({isDeleteBookmarkOpen : false});
     if (deleteOrNot){ this.setState ({isBookmarkChanged: !this.state.isBookmarkChanged}); }
   };
 
   render() {
+    console.log("RENDERED BOARD");
     let { bookmarks } = this.state
 
     return (
@@ -104,14 +105,20 @@ class Board extends Component {
               : ""}
           </div>
         )}
-        <EditBookmark show={this.state.isEditBookmarkOpen} closeEditBookmark={this.editBookmark} editBookmarkId={this.state.theBMId} editBoardId={this.state.theBoardId} />
+        {
+          this.state.userOwns ?
+            <div>
+              <EditBookmark show={this.state.isEditBookmarkOpen} closeEditBookmark={this.editBookmark} editBookmarkId={this.state.theBMId} editBoardId={this.state.theBoardId} />
+              <CreateBookmark closeCreateBookmark={this.createBookMark} show={this.state.isCreateBookmarkOpen}/>
+              <DeleteBookmark closeDeleteBookmark={this.closeDeleteBookmark} show={this.state.isDeleteBookmarkOpen} deleteBMTitle={this.state.deleteBookmarkTitle} deleteBMId={this.state.deleteBookmarkId} deleteBMBoardId={this.state.deleteBookmarkBoardId} />
+            </div>
+            :""
+        }
       </div>
       <div >
         {this.state.userId === this.state.ownerId ?
               <AddButton onClick={()=>this.setState({isCreateBookmarkOpen: !this.state.isCreateBookmarkOpen})}/>
         : null }
-        <CreateBookmark closeCreateBookmark={this.createBookMark} show={this.state.isCreateBookmarkOpen}/>
-        <DeleteBookmark closeDeleteBookmark={this.closeDeleteBookmark} show={this.state.isDeleteBookmarkOpen} deleteBMTitle={this.state.deleteBookmarkTitle} deleteBMId={this.state.deleteBookmarkId} deleteBMBoardId={this.state.deleteBookmarkBoardId} />
       </div>
     </div>
     );

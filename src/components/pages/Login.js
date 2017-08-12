@@ -16,7 +16,9 @@ export default class Login extends Component {
     let { email: {value: email}, password: {value: password} } = this.refs;
     if (email && password) {
       auth.login(email, password)
-      .then(res => this.props.router.push('/'))
+      .then(res => {
+        this.props.router.push('/')
+      })
       .catch( () => this.setState({theError : "Wrong username or password"}) )
     }
     else {
