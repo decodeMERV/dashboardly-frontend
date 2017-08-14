@@ -48,7 +48,7 @@ class Menu extends Component {
       })
   }
 
-  changeLoggedIn = () => { this.setState({isUserLoggedIn : !this.state.isUserLoggedIn}) }
+  changeLoggedIn = () => { this.setState({isUserLoggedIn : !this.state.isUserLoggedIn}); this.props.loggedOut(); console.log("menu loggedout")};
 
   render() {
     console.log("RENDERED MENU");

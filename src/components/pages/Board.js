@@ -19,7 +19,8 @@ class Board extends Component {
       userId: "",
       isCreateBookmarkOpen: false,
       isDeleteBookmarkOpen: false,
-      isBookmarkChanged : false
+      isBookmarkChanged : false,
+      userOwns: false
     };
   }
 
@@ -33,6 +34,37 @@ class Board extends Component {
     if (this.state.isBookmarkChanged !== prevState.isBookmarkChanged){
       this.fetchBoardData();
     }
+  }
+
+  shouldComponentUpdate(nextProps, nextState){ //Same logic as home.js
+    if (this.props.logOutProp !== nextProps.logOutProp){
+      return true;
+    }
+    if (this.state.userOwns !== nextState.userOwns){
+      console.log("USEROWNS");
+      return true;
+    }
+    if (this.state.bookmarks !== nextState.bookmarks){
+      console.log("bookmarks");
+      return true;
+    }
+    else if (this.state.userId !== nextState.userId){
+      console.log("USERID")
+      return true;
+    }
+    if (this.state.isBookmarkChanged !== nextState.isBookmarkChanged){
+      return true;
+    }
+    if (this.state.isEditBookmarkOpen === nextState.isEditBookmarkOpen) {
+      if (this.state.isCreateBookmarkOpen === nextState.isCreateBookmarkOpen){
+        if (this.state.isDeleteBookmarkOpen === nextState.isDeleteBookmarkOpen){
+          return false;
+        }
+        return true;
+      }
+      return true;
+    }
+    return true;
   }
 
   fetchBoardData = () => {
@@ -60,7 +92,7 @@ class Board extends Component {
   }
 
   createBookMark = (createOrNot) => {
-    console.log("CREATEBM");
+    console.log("CREATEBM METHOD");
     this.setState({ isCreateBookmarkOpen: false });
     if (createOrNot){ this.setState ({isBookmarkChanged: !this.state.isBookmarkChanged}); }
   }
@@ -92,7 +124,8 @@ class Board extends Component {
               description={b.description}
               url={b.url}
             />
-            {this.state.userOwns ?
+            {/*TODO: Below we did not implement event delegation to a parent div, can we make this more efficient? Is it even possible as each button is specific to a particular bookmark, what is a better way to design this? - Vincent Lau*/}
+            {this.state.userOwns && auth.isLoggedIn() ? //second conditional to check if user has logged out
               <div>
                 <EditButton onClick={ () => this.setState({ isEditBookmarkOpen : !this.state.isEditBookmarkOpen,  theBMId : b.id, theBoardId : b.boardId}) } />
                 <DeleteButton onClick={ () => this.setState({
@@ -116,7 +149,7 @@ class Board extends Component {
         }
       </div>
       <div >
-        {this.state.userId === this.state.ownerId ?
+        {this.state.userId === this.state.ownerId && auth.isLoggedIn() ?
               <AddButton onClick={()=>this.setState({isCreateBookmarkOpen: !this.state.isCreateBookmarkOpen})}/>
         : null }
       </div>

@@ -34,24 +34,32 @@ export default class Home extends Component {
     }
   }
 
-  // shouldComponentUpdate(nextProps, nextState) { //same type of logic as App.js but need more initial checks for fetch board and user
-  //   if (this.state.boards !== nextState.boards){
-  //     return true;
-  //   }
-  //   else if (this.state.userId !== nextState.userId){
-  //     return true;
-  //   }
-  //   if (this.state.isEditBoardOpen === nextState.isEditBoardOpen) {
-  //     if (this.state.isCreateBoardOpen === nextState.isCreateBoardOpen){
-  //       if (this.state.isDeleteBoardOpen === nextState.isDeleteBoardOpen){
-  //         return false;
-  //       }
-  //       return true;
-  //     }
-  //     return true;
-  //   }
-  //   return true;
-  // }
+
+  shouldComponentUpdate(nextProps, nextState) { //same type of logic as App.js but need more initial checks for fetch board and user
+    console.log("SCU Home.js");
+    if (this.props.logOutProp !== nextProps.logOutProp){
+      return true;
+    }
+    if (this.state.boards !== nextState.boards){
+      return true;
+    }
+    if (this.state.userId !== nextState.userId){
+      return true;
+    }
+    if (this.state.isBoardChanged !== nextState.isBoardChanged){
+      return true;
+    }
+    if (this.state.isEditBoardOpen === nextState.isEditBoardOpen) {
+      if (this.state.isCreateBoardOpen === nextState.isCreateBoardOpen){
+        if (this.state.isDeleteBoardOpen === nextState.isDeleteBoardOpen){
+          return false;
+        }
+        return true;
+      }
+      return true;
+    }
+    return true;
+  }
 
   _fetchBoards = () => {
     api.getBoardsList()
@@ -84,7 +92,7 @@ export default class Home extends Component {
   };
 
   render() {
-    console.log("HOME RERENDERED");
+    console.log("HOME RENDERED");
     let {boards} = this.state;
     return (
       <div className="home">
@@ -96,7 +104,7 @@ export default class Home extends Component {
               description={b.description}
               updatedAt={b.updatedAt}
             />
-            {b.ownerId === this.state.userId ?
+            {b.ownerId === this.state.userId && auth.isLoggedIn() && this.props.logOutProp ? // need second expression in conditional to validate if user logged out on home page!
               <div>
                 <EditButton onClick={() => this.setState({isEditBoardOpen: !this.state.isEditBoardOpen, editingBoardID: b.id})}/>
                 <DeleteButton
